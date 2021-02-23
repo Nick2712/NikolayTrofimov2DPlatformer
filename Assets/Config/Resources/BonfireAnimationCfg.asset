@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c5537fb2187ae74ebd75ca8b7556c05, type: 3}
+  m_Name: BonfireAnimationCfg
+  m_EditorClassIdentifier: 
+  Sequences:
+  - Track: 1
+    Sprites:
+    - {fileID: 21300000, guid: b0ba0a6d58156da4d894b0206acdff06, type: 3}
+    - {fileID: 21300000, guid: fdb28f8491f3de34bbc942436c32e18a, type: 3}
+    - {fileID: 21300000, guid: e30fd3bd18b971c4f97b4d36d43d3544, type: 3}
+    - {fileID: 21300000, guid: 56ba5dfd671f2e24ba3791467bf7f574, type: 3}
+    - {fileID: 21300000, guid: 5f5d8f5b4b36c4743a48437ed46f0ea9, type: 3}
+    - {fileID: 21300000, guid: b8909335f9348eb4ba47565761dda580, type: 3}
+    - {fileID: 21300000, guid: c246d3d3cf250eb4e97b15df0c3c67e4, type: 3}
+    - {fileID: 21300000, guid: aff10b20c50e3674bafb905d045972b0, type: 3}
+    - {fileID: 21300000, guid: 0f0b6399af122a44ab61ba7e9bbc3ad8, type: 3}
+    - {fileID: 21300000, guid: e1e6a42ac64bd844887ef1fe4348d9c3, type: 3}
+    - {fileID: 21300000, guid: b6390f2b19f9ea048ab9d7b1469b083b, type: 3}
+    - {fileID: 21300000, guid: f76284ca54905d041b11964fa4ce830c, type: 3}
