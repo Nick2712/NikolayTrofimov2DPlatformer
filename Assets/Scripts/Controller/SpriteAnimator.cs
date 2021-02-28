@@ -15,11 +15,11 @@ namespace NikolayT2DGame
             public float Speed = 10.0f;
             public float Counter = 0;
             public bool Sleeps;
-
-            public void Update()
+            
+            public void Update(float animationSpeedScale)
             {
                 if (Sleeps) return;
-                Counter += Time.deltaTime * Speed;
+                Counter += Time.deltaTime * Speed * animationSpeedScale;
                 if (Loop)
                 {
                     while(Counter > Sprites.Count)
@@ -35,8 +35,8 @@ namespace NikolayT2DGame
             }
         }
 
-        private SpriteAnimatorConfig _config;
-        private Dictionary<SpriteRenderer, Animation> _activeAnimations = 
+        private readonly SpriteAnimatorConfig _config;
+        private readonly Dictionary<SpriteRenderer, Animation> _activeAnimations = 
             new Dictionary<SpriteRenderer, Animation>();
 
         public SpriteAnimator(SpriteAnimatorConfig config)
@@ -81,11 +81,11 @@ namespace NikolayT2DGame
             }
         }
 
-        public void Update()
+        public void Update(float animationSpeeScale = 1.0f)
         {
             foreach(var animation in _activeAnimations)
             {
-                animation.Value.Update();
+                animation.Value.Update(animationSpeeScale);
                 if(animation.Value.Counter < animation.Value.Sprites.Count)
                 {
                     animation.Key.sprite = 

@@ -10,26 +10,32 @@ namespace NikolayT2DGame
         [SerializeField] private LevelObjectView _playerView;
         [SerializeField] private LevelObjectView _bonfireView;
         [SerializeField] private int _animationSpeed = 10;
-        private SpriteAnimator _playerAnimator;
         private SpriteAnimator _bonfireAnimator;
+        private MainHeroWalker _mainHeroWalker;
+        private PlayerCamera _playerCamera;
 
         private void Awake()
         {
             SpriteAnimatorConfig config = 
                 Resources.Load<SpriteAnimatorConfig>("PlayerAnimationCfg");
-            _playerAnimator = new SpriteAnimator(config);
-            _playerAnimator.StartAnimation(_playerView._spriteRenderer,
-                AnimState.Idle, true, _animationSpeed);
+            _mainHeroWalker = new MainHeroWalker(_playerView, new SpriteAnimator(
+                config));
             config = Resources.Load<SpriteAnimatorConfig>("BonfireAnimationCfg");
             _bonfireAnimator = new SpriteAnimator(config);
-            _bonfireAnimator.StartAnimation(_bonfireView._spriteRenderer, 
+            _bonfireAnimator.StartAnimation(_bonfireView.SpriteRenderer, 
                 AnimState.Idle, true, _animationSpeed);
+            _playerCamera = new PlayerCamera(_camera.transform, _playerView.transform);
         }
 
         private void Update()
         {
-            _playerAnimator.Update();
+            _mainHeroWalker.Update();
             _bonfireAnimator.Update();
+        }
+
+        private void LateUpdate()
+        {
+            _playerCamera.LateUpdate();
         }
     }
 }

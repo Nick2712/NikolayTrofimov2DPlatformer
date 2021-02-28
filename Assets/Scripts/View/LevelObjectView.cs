@@ -5,9 +5,9 @@ namespace NikolayT2DGame
 {
     public class LevelObjectView : MonoBehaviour
     {
-        public Transform _transform;
-        public SpriteRenderer _spriteRenderer;
-        public Rigidbody2D _rigidbody2D;
-        public Collider2D _collider2D;
+        public Transform Transform;
+        public SpriteRenderer SpriteRenderer;
+        public Rigidbody2D Rigidbody2D;
+        public Collider2D Collider2D;
     }
 }
