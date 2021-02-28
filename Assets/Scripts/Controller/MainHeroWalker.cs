@@ -13,9 +13,9 @@ namespace NikolayT2DGame
         private const float _jumpStartSpeed = 10.0f;
         private const float _movingThresh = 0.01f;
         private const float _flyThresh = 1.0f;
-        private const float _groundLevel = -3.0f;
         private const float _g = -20.0f;
 
+        private readonly float _groundLevel;
         private readonly Vector3 _leftScale = new Vector3(-1, 1, 1);
         private readonly Vector3 _rightScale = new Vector3(1, 1, 1);
 
@@ -26,10 +26,12 @@ namespace NikolayT2DGame
         private readonly LevelObjectView _view;
         private readonly SpriteAnimator _spriteAnimator;
 
-        public MainHeroWalker(LevelObjectView view, SpriteAnimator spriteAnimator)
+        public MainHeroWalker(LevelObjectView view, SpriteAnimator spriteAnimator,
+            float growndLevel)
         {
             _view = view;
             _spriteAnimator = spriteAnimator;
+            _groundLevel = growndLevel;
         }
 
         public void Update()
