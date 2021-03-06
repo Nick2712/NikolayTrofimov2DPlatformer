@@ -20,7 +20,9 @@ namespace NikolayT2DGame
 
         public void LateUpdate()
         {
-            _cameraPositionBufer.x = _playerPosition.position.x;
+            //_cameraPositionBufer.x = _playerPosition.position.x;
+            _cameraPositionBufer = _playerPosition.position;
+            _cameraPositionBufer += _cameraOfset;
             _cameraPosition.position = _cameraPositionBufer;
         }
     }

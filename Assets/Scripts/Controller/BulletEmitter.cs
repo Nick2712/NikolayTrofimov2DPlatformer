@@ -7,15 +7,15 @@ namespace NikolayT2DGame
     public class BulletsEmitter
     {
         private const float _delay = 1;
-        private const float _startSpeed = -5;
+        private const float _startSpeed = -2;
 
-        private readonly List<Bullet> _bullets;
+        private readonly List<PhysicsBullet> _bullets;
         private readonly Transform _transform;
 
         private int _currentIndex;
         private float _timeTillNextBullet;
 
-        public BulletsEmitter(List<Bullet> bulletViews, Transform transform)
+        public BulletsEmitter(List<PhysicsBullet> bulletViews, Transform transform)
         {
             _transform = transform;
             _bullets = bulletViews;
@@ -35,7 +35,6 @@ namespace NikolayT2DGame
                 _currentIndex++;
                 if (_currentIndex >= _bullets.Count) _currentIndex = 0;
             }
-            _bullets.ForEach(b => b.Update());
         }
     }
 }

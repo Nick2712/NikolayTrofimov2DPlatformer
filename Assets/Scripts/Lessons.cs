@@ -6,43 +6,29 @@ namespace NikolayT2DGame
 {
     public class Lessons : MonoBehaviour
     {
-        [SerializeField] private Camera _camera;
-        [SerializeField] private LevelObjectView _playerView;
-        [SerializeField] private LevelObjectView _bonfireView;
         [SerializeField] private int _animationSpeed = 10;
         [SerializeField] private Transform _cannonBarrel;
         [SerializeField] private GameObject _bullet;
         [SerializeField] private Transform _emitter;
         [SerializeField] private int _bulletsCount = 5;
-        private SpriteAnimator _bonfireAnimator;
-        private MainHeroWalker _mainHeroWalker;
-        private PlayerCamera _playerCamera;
+        
         private AimingMuzzle _aimingMuzzle;
         private BulletsEmitter _bulletsEmitter;
+        private GameInitializer _gameInitializer;
 
-        private float _groundLevel = -3.0f;
 
         private void Awake()
         {
-            SpriteAnimatorConfig config = 
-                Resources.Load<SpriteAnimatorConfig>("PlayerAnimationCfg");
-            _mainHeroWalker = new MainHeroWalker(_playerView, new SpriteAnimator(
-                config), _groundLevel);
+            _gameInitializer = new GameInitializer(_animationSpeed);
 
-            config = Resources.Load<SpriteAnimatorConfig>("BonfireAnimationCfg");
-            _bonfireAnimator = new SpriteAnimator(config);
-            _bonfireAnimator.StartAnimation(_bonfireView.SpriteRenderer, 
-                AnimState.Idle, true, _animationSpeed);
+            _aimingMuzzle = new AimingMuzzle(_cannonBarrel, 
+                _gameInitializer.PlayerController.PlayerTransform);
 
-            _playerCamera = new PlayerCamera(_camera.transform, _playerView.transform);
-
-            _aimingMuzzle = new AimingMuzzle(_cannonBarrel, _playerView.transform);
-
-            List<Bullet> bullets = new List<Bullet>();
+            List<PhysicsBullet> bullets = new List<PhysicsBullet>();
             for(int i = 0; i < _bulletsCount; i++)
             {
-                Bullet bullet = new Bullet(Instantiate(_bullet), 
-                    _groundLevel);
+                PhysicsBullet bullet =
+                    new PhysicsBullet(Instantiate(_bullet).GetComponent<LevelObjectView>());
                 bullets.Add(bullet);
             }
             _bulletsEmitter = new BulletsEmitter(bullets, _emitter);
@@ -50,15 +36,33 @@ namespace NikolayT2DGame
 
         private void Update()
         {
-            _mainHeroWalker.Update();
-            _bonfireAnimator.Update();
             _aimingMuzzle.Update();
             _bulletsEmitter.Update();
+            _gameInitializer.PlayerController.Update();
+            if(_gameInitializer.CoinsAnimation.Count > 0)
+            {
+                foreach(var coin in _gameInitializer.CoinsAnimation)
+                {
+                    coin.Update();
+                }
+            }
+            if(_gameInitializer.EnvironmentsAnimation.Count > 0)
+            {
+                foreach(var environment in _gameInitializer.EnvironmentsAnimation)
+                {
+                    environment.Update();
+                }
+            }
+        }
+
+        private void FixedUpdate()
+        {
+            _gameInitializer.PlayerController.FixedUpdate();
         }
 
         private void LateUpdate()
         {
-            _playerCamera.LateUpdate();
+            _gameInitializer.PlayerCamera.LateUpdate();
         }
     }
 }
