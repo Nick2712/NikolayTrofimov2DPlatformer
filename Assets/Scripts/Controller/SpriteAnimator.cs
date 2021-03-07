@@ -81,15 +81,18 @@ namespace NikolayT2DGame
             }
         }
 
-        public void Update(float animationSpeeScale = 1.0f)
+        public void Update(float animationSpeedScale = 1.0f)
         {
-            foreach(var animation in _activeAnimations)
+            if (_activeAnimations.Count > 0)
             {
-                animation.Value.Update(animationSpeeScale);
-                if(animation.Value.Counter < animation.Value.Sprites.Count)
+                foreach (var animation in _activeAnimations)
                 {
-                    animation.Key.sprite = 
-                        animation.Value.Sprites[(int)animation.Value.Counter];
+                    animation.Value.Update(animationSpeedScale);
+                    if (animation.Value.Counter < animation.Value.Sprites.Count)
+                    {
+                        animation.Key.sprite =
+                            animation.Value.Sprites[(int)animation.Value.Counter];
+                    }
                 }
             }
         }

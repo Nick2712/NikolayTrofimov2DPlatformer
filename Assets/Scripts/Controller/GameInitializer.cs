@@ -8,22 +8,20 @@ namespace NikolayT2DGame
     public class GameInitializer
     {
         public PlayerCamera PlayerCamera { get; private set; }
-        public MainHeroPhysicsWalker PlayerController { get; private set; }
-        public List<SpriteAnimator> CoinsAnimation { get; private set; } = 
-            new List<SpriteAnimator>();
-        public List<SpriteAnimator> EnvironmentsAnimation { get; private set; } = 
-            new List<SpriteAnimator>();
+        public PlayerController PlayerController { get; private set; }
+        public SpriteAnimator BonfireAnimation { get; private set; }
+        public CoinsManager CoinsManager { get; private set; }
+        public LevelObjectView _playerView { get; private set; }
 
         private readonly Camera _mainCamera;
-        private readonly LevelObjectView _playerView;
-        private readonly List<LevelObjectView> _coinsView = new List<LevelObjectView>();
-        private readonly List<LevelObjectView> _environmentsView = 
-            new List<LevelObjectView>();
-
-        public GameInitializer(float defaultAnimationSpeed)
+        private readonly UIController _uIController;
+        
+        public GameInitializer(float defaultAnimationSpeed, int playerStartHealth, UIView uIView)
         {
             _mainCamera = Camera.main;
-            
+
+            List<LevelObjectView> coinsView = new List<LevelObjectView>();
+            List<LevelObjectView> bonfiresView = new List<LevelObjectView>();
             var objectsView = Object.FindObjectsOfType<LevelObjectView>();
             foreach(LevelObjectView objectView in objectsView)
             {
@@ -33,32 +31,34 @@ namespace NikolayT2DGame
                 }
                 if(objectView.CompareTag(TagManager.COIN))
                 {
-                    _coinsView.Add(objectView);
+                    coinsView.Add(objectView);
                 }
                 if(objectView.CompareTag(TagManager.ENVIRONMENT))
                 {
-                    _environmentsView.Add(objectView);
+                    bonfiresView.Add(objectView);
                 }
             }
 
-            PlayerController = new MainHeroPhysicsWalker(_playerView, 
-                new SpriteAnimator(_playerView.SpriteAnimatorConfig));
+            PlayerController = new PlayerController(_playerView, playerStartHealth);
+
             PlayerCamera = new PlayerCamera(_mainCamera.transform, _playerView.transform);
 
-            for(int i = 0; i < _coinsView.Count; i++)
+            var animationConfig = 
+                Resources.Load<SpriteAnimatorConfig>(LoadPathManager.COIN_ANIMATION_CFG);
+            CoinsManager = new CoinsManager(_playerView, coinsView, 
+                new SpriteAnimator(animationConfig));
+            
+            animationConfig = 
+                Resources.Load<SpriteAnimatorConfig>(LoadPathManager.BONFIRE_ANIMATION_CFG);
+            BonfireAnimation = new SpriteAnimator(animationConfig);
+
+            for(int i = 0; i < bonfiresView.Count; i++)
             {
-                CoinsAnimation.Add(new SpriteAnimator(_coinsView[i].SpriteAnimatorConfig));
-                CoinsAnimation[i].StartAnimation(_coinsView[i].SpriteRenderer,
+                BonfireAnimation.StartAnimation(bonfiresView[i].SpriteRenderer,
                     AnimState.Idle, true, defaultAnimationSpeed);
             }
 
-            for(int i = 0; i < _environmentsView.Count; i++)
-            {
-                EnvironmentsAnimation.Add(
-                    new SpriteAnimator(_environmentsView[i].SpriteAnimatorConfig));
-                EnvironmentsAnimation[i].StartAnimation(_environmentsView[i].SpriteRenderer,
-                    AnimState.Idle, true, defaultAnimationSpeed);
-            }
+            _uIController = new UIController(uIView, PlayerController);
         }
     }
 }

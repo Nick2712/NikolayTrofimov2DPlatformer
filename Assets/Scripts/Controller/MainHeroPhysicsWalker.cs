@@ -32,7 +32,7 @@ namespace NikolayT2DGame
         private readonly LevelObjectView _view;
         private readonly SpriteAnimator _spriteAnimator;
         private readonly ContactsPoller _contactsPoller;
-
+        
         public MainHeroPhysicsWalker(LevelObjectView view, SpriteAnimator
             spriteAnimator)
         {
