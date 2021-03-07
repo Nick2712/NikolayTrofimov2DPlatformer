@@ -11,7 +11,8 @@ namespace NikolayT2DGame
         public PlayerController PlayerController { get; private set; }
         public SpriteAnimator BonfireAnimation { get; private set; }
         public CoinsManager CoinsManager { get; private set; }
-        public LevelObjectView _playerView { get; private set; }
+        public LevelObjectView PlayerView { get; private set; }
+        public List<CannonController> CannonControllers { get; private set; }
 
         private readonly Camera _mainCamera;
         private readonly UIController _uIController;
@@ -27,7 +28,7 @@ namespace NikolayT2DGame
             {
                 if(objectView.CompareTag(TagManager.PLAYER))
                 {
-                    _playerView = objectView;
+                    PlayerView = objectView;
                 }
                 if(objectView.CompareTag(TagManager.COIN))
                 {
@@ -39,13 +40,24 @@ namespace NikolayT2DGame
                 }
             }
 
-            PlayerController = new PlayerController(_playerView, playerStartHealth);
+            PlayerController = new PlayerController(PlayerView, playerStartHealth);
 
-            PlayerCamera = new PlayerCamera(_mainCamera.transform, _playerView.transform);
+            CannonControllers = new List<CannonController>();
+            var cannons = Object.FindObjectsOfType<CannonView>();
+            if(cannons.Length > 0)
+            {
+                foreach(CannonView cannon in cannons)
+                {
+                    var cannonController = new CannonController(cannon, this);
+                    CannonControllers.Add(cannonController);
+                }
+            }
+
+            PlayerCamera = new PlayerCamera(_mainCamera.transform, PlayerView.transform);
 
             var animationConfig = 
                 Resources.Load<SpriteAnimatorConfig>(LoadPathManager.COIN_ANIMATION_CFG);
-            CoinsManager = new CoinsManager(_playerView, coinsView, 
+            CoinsManager = new CoinsManager(PlayerView, coinsView, 
                 new SpriteAnimator(animationConfig));
             
             animationConfig = 

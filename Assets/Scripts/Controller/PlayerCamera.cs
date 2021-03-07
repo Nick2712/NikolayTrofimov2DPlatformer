@@ -22,6 +22,7 @@ namespace NikolayT2DGame
         {
             _cameraPositionBufer = _playerPosition.position;
             _cameraPositionBufer += _cameraOfset;
+            if (_cameraPositionBufer.y < 0) _cameraPositionBufer.y = 0;
             _cameraPosition.position = _cameraPositionBufer;
         }
     }

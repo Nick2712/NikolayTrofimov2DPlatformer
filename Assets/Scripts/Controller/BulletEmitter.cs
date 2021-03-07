@@ -6,8 +6,8 @@ namespace NikolayT2DGame
 {
     public class BulletsEmitter
     {
-        private const float _delay = 1;
-        private const float _startSpeed = -2;
+        private readonly float _delay;
+        private readonly float _startSpeed;
 
         private readonly List<PhysicsBullet> _bullets;
         private readonly Transform _transform;
@@ -15,10 +15,12 @@ namespace NikolayT2DGame
         private int _currentIndex;
         private float _timeTillNextBullet;
 
-        public BulletsEmitter(List<PhysicsBullet> bulletViews, Transform transform)
+        public BulletsEmitter(List<PhysicsBullet> bulletViews, Transform transform, float delay, float startSpeed)
         {
             _transform = transform;
             _bullets = bulletViews;
+            _delay = delay;
+            _startSpeed = startSpeed;
         }
 
         public void Update()
