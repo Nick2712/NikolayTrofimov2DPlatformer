@@ -13,16 +13,21 @@ namespace NikolayT2DGame
         public CoinsManager CoinsManager { get; private set; }
         public LevelObjectView PlayerView { get; private set; }
         public List<CannonController> CannonControllers { get; private set; }
+        public List<LiftController> LiftControllers { get; private set; }
 
         private readonly Camera _mainCamera;
         private readonly UIController _uIController;
+        private readonly LazerController _lazerController;
         
-        public GameInitializer(float defaultAnimationSpeed, int playerStartHealth, UIView uIView)
+        public GameInitializer(float defaultAnimationSpeed, int playerStartHealth, 
+            UIView uIView)
         {
             _mainCamera = Camera.main;
+            
 
             List<LevelObjectView> coinsView = new List<LevelObjectView>();
             List<LevelObjectView> bonfiresView = new List<LevelObjectView>();
+            List<LevelObjectView> lazersView = new List<LevelObjectView>();
             var objectsView = Object.FindObjectsOfType<LevelObjectView>();
             foreach(LevelObjectView objectView in objectsView)
             {
@@ -38,9 +43,15 @@ namespace NikolayT2DGame
                 {
                     bonfiresView.Add(objectView);
                 }
+                if (objectView.CompareTag(TagManager.LAZER))
+                {
+                    lazersView.Add(objectView);
+                }
             }
 
             PlayerController = new PlayerController(PlayerView, playerStartHealth);
+
+            _lazerController = new LazerController(lazersView, PlayerView, PlayerController);
 
             CannonControllers = new List<CannonController>();
             var cannons = Object.FindObjectsOfType<CannonView>();
@@ -50,6 +61,17 @@ namespace NikolayT2DGame
                 {
                     var cannonController = new CannonController(cannon, this);
                     CannonControllers.Add(cannonController);
+                }
+            }
+
+            LiftControllers = new List<LiftController>();
+            var lifts = Object.FindObjectsOfType<LiftView>();
+            if (lifts.Length > 0)
+            {
+                foreach (LiftView lift in lifts)
+                {
+                    var liftController = new LiftController(lift);
+                    LiftControllers.Add(liftController);
                 }
             }
 

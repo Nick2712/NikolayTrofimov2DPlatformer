@@ -26,6 +26,10 @@ namespace NikolayT2DGame
             {
                 _gameInitializer.CannonControllers[i].Update();
             }
+            for(int i = 0; i < _gameInitializer.LiftControllers.Count; i++)
+            {
+                _gameInitializer.LiftControllers[i].Update();
+            }
         }
 
         private void FixedUpdate()

@@ -15,8 +15,13 @@ namespace NikolayT2DGame
             }
         }
 
+        private readonly LevelObjectView _view;
+        private readonly SpriteAnimator _spriteAnimator;
+        private readonly ContactsPoller _contactsPoller;
+
         private const string _verticalAxisName = "Vertical";
         private const string _horizontalAxisName = "Horizontal";
+        private const KeyCode _jumpButton = KeyCode.Space;
 
         private const float _walkAnimationsSpeed = 40.0f;
         private const float _idleAnimationsSpeed = 10.0f;
@@ -27,11 +32,11 @@ namespace NikolayT2DGame
         private const float _movingThresh = 0.01f;
 
         private bool _doJump;
+        private bool _walks;
         private float _goSideWay = 0;
+        private float _newVelocity;
 
-        private readonly LevelObjectView _view;
-        private readonly SpriteAnimator _spriteAnimator;
-        private readonly ContactsPoller _contactsPoller;
+        
         
         public MainHeroPhysicsWalker(LevelObjectView view, SpriteAnimator
             spriteAnimator)
@@ -43,7 +48,7 @@ namespace NikolayT2DGame
 
         public void Update()
         {
-            if (Input.GetKey(KeyCode.Space)) _doJump = true;
+            if (Input.GetKey(_jumpButton)) _doJump = true;
             else _doJump = false;
             _goSideWay = Input.GetAxis(_horizontalAxisName);
         }
@@ -52,20 +57,21 @@ namespace NikolayT2DGame
         {
             _contactsPoller.FixedUpdate();
 
-            var walks = Mathf.Abs(_goSideWay) > _movingThresh;
+            _walks = Mathf.Abs(_goSideWay) > _movingThresh;
 
-            if (walks) _view.SpriteRenderer.flipX = _goSideWay < 0;
-            var newVelocity = 0f;
-            if (walks &&
+            if (_walks) _view.SpriteRenderer.flipX = _goSideWay < 0;
+            _newVelocity = 0f;
+            if (_walks &&
                 (_goSideWay > 0 || !_contactsPoller.HasLeftContacts) &&
                 (_goSideWay < 0 || !_contactsPoller.HasRightContacts))
             {
-                newVelocity = Time.fixedDeltaTime * _walkSpeed * _goSideWay;
+                _newVelocity = Time.fixedDeltaTime * _walkSpeed * _goSideWay;
             }
             _view.Rigidbody2D.velocity = _view.Rigidbody2D.velocity.Change(
-                 x: newVelocity);
-            if (_contactsPoller.IsGrounded && _doJump && 
-                _view.Rigidbody2D.velocity.y < _jumpThresh)
+                 x: _newVelocity);
+            if (_contactsPoller.IsGrounded && _doJump &&
+                Mathf.Abs(_view.Rigidbody2D.velocity.y -
+                _contactsPoller.GroundVelocity.y) <= _jumpThresh)
             {
                 _view.Rigidbody2D.AddForce(Vector3.up * _jumpForse, ForceMode2D.Impulse);
             }
@@ -73,9 +79,9 @@ namespace NikolayT2DGame
             //animations
             if (_contactsPoller.IsGrounded)
             {
-                var track = walks ? AnimState.Walk : AnimState.Idle;
+                var track = _walks ? AnimState.Walk : AnimState.Idle;
                 _spriteAnimator.StartAnimation(_view.SpriteRenderer, track, true,
-                    walks ? _walkAnimationsSpeed * Mathf.Abs(_goSideWay) : 
+                    _walks ? _walkAnimationsSpeed * Mathf.Abs(_goSideWay) : 
                     _idleAnimationsSpeed);
             }
             else if (Mathf.Abs(_view.Rigidbody2D.velocity.y) > _flyThresh)
@@ -94,5 +100,4 @@ namespace NikolayT2DGame
             _spriteAnimator.Update();
         }
     }
-
 }

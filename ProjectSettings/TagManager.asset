@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Environment
   - Coin
+  - Enemy
+  - Lazer
   layers:
   - Default
   - TransparentFX
