@@ -67,8 +67,8 @@ namespace NikolayT2DGame
             {
                 _newVelocity = Time.fixedDeltaTime * _walkSpeed * _goSideWay;
             }
-            _view.Rigidbody2D.velocity = _view.Rigidbody2D.velocity.Change(
-                 x: _newVelocity);
+            _view.Rigidbody2D.velocity = _view.Rigidbody2D.velocity.Change(x: _newVelocity + 
+                (_contactsPoller.IsGrounded ? _contactsPoller.GroundVelocity.x : 0));
             if (_contactsPoller.IsGrounded && _doJump &&
                 Mathf.Abs(_view.Rigidbody2D.velocity.y -
                 _contactsPoller.GroundVelocity.y) <= _jumpThresh)

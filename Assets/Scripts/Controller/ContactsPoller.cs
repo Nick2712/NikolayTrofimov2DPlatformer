@@ -16,7 +16,7 @@ namespace NikolayT2DGame
         public bool IsGrounded { get; private set; }
         public bool HasLeftContacts { get; private set; }
         public bool HasRightContacts { get; private set; }
-        public Vector2 GroundVelocity { get; private set; } = new Vector2();
+        public Vector2 GroundVelocity { get; private set; }
 
         public ContactsPoller(Collider2D collider2D)
         {
