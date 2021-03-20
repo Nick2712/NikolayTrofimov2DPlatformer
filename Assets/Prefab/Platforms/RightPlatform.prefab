@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2500346126906043852}
   - component: {fileID: 896218311915644771}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GrassCliffRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,7 +91,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7659648292221492593}
   - component: {fileID: 1102978196346038512}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GrassCliffMid (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -172,7 +172,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6350524525367257520}
   - component: {fileID: 5525304179597023053}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GrassCliffMid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -253,7 +253,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2925715745195535480}
   - component: {fileID: 8246505830342132127}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RightPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}

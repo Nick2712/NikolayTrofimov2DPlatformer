@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4228901170748801952}
   - component: {fileID: 4974214675526726357}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GrassCliffRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 9220893060305860830}
   - component: {fileID: 6364153480297626593}
   - component: {fileID: -6889640110226967103}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Lift
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -203,7 +203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f016594275ca1c54c9904d173c6a0270, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SliderJoint2D: {fileID: 6364153480297626593}
+  SliderJoint: {fileID: 0}
   LiftMovingDistance: 0
 --- !u!1 &4704633208221147003
 GameObject:
@@ -215,7 +215,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5084074975602030907}
   - component: {fileID: 7267469089547328390}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GrassCliffLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -296,7 +296,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1585349729780475843}
   - component: {fileID: 2661706512768231969}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GrassCliffMid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
