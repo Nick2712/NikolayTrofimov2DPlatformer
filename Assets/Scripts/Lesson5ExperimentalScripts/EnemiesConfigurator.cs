@@ -17,6 +17,7 @@ namespace NikolayT2DGame
         [SerializeField] private LevelObjectView _stalkerAIView;
         [SerializeField] private Seeker _stalkerAISeeker;
         [SerializeField] private Transform _stalkerAITarget;
+        [SerializeField] private float _maxSqrDistanceToStalking = 100.0f;
 
         [Header("Protector AI")]
         [SerializeField] private LevelObjectView _protectorAIView;
@@ -39,15 +40,20 @@ namespace NikolayT2DGame
 
         private void Start()
         {
-            _simplePatrolAI = new SimplePatrolAI(_simplePatrolAIView, new SimplePatrolAIModel(_simplePatrolAIConfig));
+            _simplePatrolAI = new SimplePatrolAI(_simplePatrolAIView, 
+                new SimplePatrolAIModel(_simplePatrolAIConfig));
 
-            _stalkerAI = new StalkerAI(_stalkerAIView, new StalkerAIModel(_stalkerAIConfig), _stalkerAISeeker, _stalkerAITarget);
+            _stalkerAI = new StalkerAI(_stalkerAIView, new StalkerAIModel(_stalkerAIConfig), 
+                _stalkerAISeeker, _stalkerAITarget, _maxSqrDistanceToStalking);
             InvokeRepeating(nameof(RecalculateAIPath), 0.0f, 1.0f);
 
-            _protectorAI = new ProtectorAI(_protectorAIView, new PatrolAIModel(_protectorWaypoints), _protectorAIDestinationSetter, _protectorAIPatrolPath);
+            _protectorAI = new ProtectorAI(_protectorAIView, 
+                new PatrolAIModel(_protectorWaypoints), _protectorAIDestinationSetter, 
+                _protectorAIPatrolPath);
             _protectorAI.Init();
 
-            _protectedZone = new ProtectedZone(_protectedZoneTrigger, new List<IProtector> { _protectorAI });
+            _protectedZone = new ProtectedZone(_protectedZoneTrigger, 
+                new List<IProtector> { _protectorAI });
             _protectedZone.Init();
         }
 
