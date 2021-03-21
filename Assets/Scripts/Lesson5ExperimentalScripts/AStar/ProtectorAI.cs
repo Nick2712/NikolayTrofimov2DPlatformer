@@ -50,9 +50,14 @@ namespace NikolayT2DGame
 
         private void OnTargetReached(object sender, EventArgs e)
         {
-            _destinationSetter.target = _isPatrolling
-                ? _model.GetNextTarget()
-                : _model.GetClosestTarget(_view.Transform.position);
+            if (_isPatrolling)
+            {
+                _destinationSetter.target = _model.GetNextTarget();
+            }
+            else
+            {
+                Debug.Log("мочить");
+            }
         }
 
         public void StartProtection(GameObject invader)

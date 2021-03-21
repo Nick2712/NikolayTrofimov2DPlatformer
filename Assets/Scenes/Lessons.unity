@@ -2680,8 +2680,8 @@ MonoBehaviour:
     - {fileID: 1791902679}
   _simplePatrolAIView: {fileID: 1330664963}
   _stalkerAIConfig:
-    speed: 200
-    minSqrDistanceToTarget: 2
+    speed: 150
+    minSqrDistanceToTarget: 4
     waypoints: []
   _stalkerAIView: {fileID: 274662491}
   _stalkerAISeeker: {fileID: 274662490}

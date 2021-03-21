@@ -35,7 +35,7 @@ namespace NikolayT2DGame
             if (_waypoints == null) return null;
 
             var closestIndex = 0;
-            var closestDistance = 0.0f;
+            var closestDistance = Vector2.Distance(fromPosition, _waypoints[0].position);
             for (var i = 0; i < _waypoints.Length; i++)
             {
                 var distance = Vector2.Distance(fromPosition, _waypoints[i].position);
