@@ -10,11 +10,19 @@ namespace NikolayT2DGame
         [SerializeField] private int _animationSpeed = 10;
         [SerializeField] private int _bulletsCount = 5;
         [SerializeField] private int _playerStartHealth = 3;
+        [SerializeField] private bool _marchingSqareIsOn = false;
+        [SerializeField] private bool _borderIsOn = true;
         private GameInitializer _gameInitializer;
+
+        [SerializeField] private GenerateLevelView _generateLevelView;
+        private GeneratorLevelController _generatorLevelController;
 
         private void Awake()
         {
             _gameInitializer = new GameInitializer(_animationSpeed, _playerStartHealth, _uIView);
+            _generatorLevelController = new GeneratorLevelController(_generateLevelView, 
+                _marchingSqareIsOn, _borderIsOn);
+            _generatorLevelController.Awake();
         }
 
         private void Update()
